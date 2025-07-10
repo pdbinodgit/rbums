@@ -1,0 +1,13 @@
+package com.rbums.rbums;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class RbumsApplicationTests {
+
+	@Test
+	void contextLoads() {
+	}
+
+}
