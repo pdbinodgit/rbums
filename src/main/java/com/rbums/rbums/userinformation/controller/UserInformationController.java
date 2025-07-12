@@ -1,13 +1,12 @@
 package com.rbums.rbums.userinformation.controller;
 
+import com.rbums.rbums.customresponse.ApiResponse;
 import com.rbums.rbums.userinformation.dto.UserInformationDto;
 import com.rbums.rbums.userinformation.service.UserInformationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,13 +18,13 @@ public class UserInformationController {
     UserInformationService userInformationService;
 
     @PostMapping("/saveUser")
-    ResponseEntity<String> saveUserInformation(UserInformationDto userInformationDto){
-        userInformationService.saveUserInformation(userInformationDto);
-        return ResponseEntity.ok("Save user information");
+    ResponseEntity<ApiResponse<?>> saveUserInformation(@RequestBody UserInformationDto userInformationDto){
+      UserInformationDto dto=  userInformationService.saveUserInformation(userInformationDto);
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>(HttpStatus.OK,"User information saved successfully",dto));
     }
 
     @GetMapping("/getAllUser")
-    List<UserInformationDto> getAllUser(){
-        return userInformationService.getAllUser();
+    ResponseEntity<ApiResponse<List<?>>> getAllUser(){
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>(HttpStatus.OK,"User information retrieve successfully",userInformationService.getAllUser()));
     }
 }

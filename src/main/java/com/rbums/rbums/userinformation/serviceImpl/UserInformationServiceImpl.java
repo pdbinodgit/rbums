@@ -17,12 +17,19 @@ public class UserInformationServiceImpl implements UserInformationService {
     @Autowired
     UserInformationRepository userInformationRepository;
 
-    @Autowired
-    UserInformationMapper userInformationMapper;
+
+    private final UserInformationMapper userInformationMapper;
+
+    public UserInformationServiceImpl(UserInformationMapper userInformationMapper) {
+        this.userInformationMapper = userInformationMapper;
+    }
 
     @Override
-    public void saveUserInformation(UserInformationDto userInformationDto) {
-        userInformationRepository.save(userInformationMapper.dtoToEntity(userInformationDto));
+    public UserInformationDto saveUserInformation(UserInformationDto userInformationDto) {
+        UserInformation userInformation=userInformationMapper.dtoToEntity(userInformationDto);
+
+      UserInformation userInformation1=  userInformationRepository.save(userInformation);
+      return userInformationMapper.entityToDto(userInformation1);
     }
 
     @Override

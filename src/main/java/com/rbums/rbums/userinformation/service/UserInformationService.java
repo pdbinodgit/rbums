@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface UserInformationService {
 
-     void  saveUserInformation(UserInformationDto userInformationDto);
+     UserInformationDto  saveUserInformation(UserInformationDto userInformationDto);
 
      List<UserInformationDto> getAllUser();
 
