@@ -1,5 +1,7 @@
 package com.rbums.rbums.userinformation.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,7 +20,9 @@ public class UserInformationDto {
 
     private LocalDate dateOfBirth;
 
+    @NotBlank(message = "User name is required")
     private String username;
-
+    @NotBlank(message = "Password is required")
+    @Size(min = 8, message = "Password must be at least 8 characters")
     private String password;
 }
