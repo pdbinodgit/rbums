@@ -3,11 +3,14 @@ package com.rbums.rbums.mapperinterface;
 import com.rbums.rbums.userinformation.dto.UserInformationDto;
 import com.rbums.rbums.userinformation.model.UserInformation;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring",uses = AddressMapper.class)
 public interface UserInformationMapper {
 
+     @Mapping(source = "addressDto", target = "address")
      UserInformation dtoToEntity(UserInformationDto userInformationDto);
 
+     @Mapping(source = "address", target = "addressDto")
      UserInformationDto entityToDto(UserInformation userInformation);
 }

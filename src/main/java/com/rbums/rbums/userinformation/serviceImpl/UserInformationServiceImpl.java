@@ -26,8 +26,10 @@ public class UserInformationServiceImpl implements UserInformationService {
 
     @Override
     public UserInformationDto saveUserInformation(UserInformationDto userInformationDto) {
+        System.out.println(".........");
+        System.out.println(userInformationDto.getAddressDto().getCountry());
         UserInformation userInformation=userInformationMapper.dtoToEntity(userInformationDto);
-
+        System.out.println(userInformation.getAddress().getCountry());
       UserInformation userInformation1=  userInformationRepository.save(userInformation);
       return userInformationMapper.entityToDto(userInformation1);
     }

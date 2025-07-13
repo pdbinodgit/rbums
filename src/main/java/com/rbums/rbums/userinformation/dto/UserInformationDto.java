@@ -1,7 +1,6 @@
 package com.rbums.rbums.userinformation.dto;
 
 import com.rbums.rbums.address.dto.AddressDto;
-import com.rbums.rbums.address.model.Address;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
