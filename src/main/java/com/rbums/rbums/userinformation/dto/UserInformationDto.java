@@ -1,5 +1,7 @@
 package com.rbums.rbums.userinformation.dto;
 
+import com.rbums.rbums.address.dto.AddressDto;
+import com.rbums.rbums.address.model.Address;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
@@ -10,6 +12,9 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class UserInformationDto {
+
+    private Long id;
+
     private String  firstName;
 
     private String middleName;
@@ -25,4 +30,6 @@ public class UserInformationDto {
     @NotBlank(message = "Password is required")
     @Size(min = 8, message = "Password must be at least 8 characters")
     private String password;
+
+    private AddressDto addressDto;
 }

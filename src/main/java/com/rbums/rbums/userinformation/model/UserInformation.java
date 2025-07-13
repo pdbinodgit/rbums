@@ -1,12 +1,7 @@
 package com.rbums.rbums.userinformation.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import com.rbums.rbums.address.model.Address;
+import jakarta.persistence.*;
 import lombok.Data;
 
 
@@ -34,4 +29,9 @@ public class UserInformation {
     private String username;
 
     private String password;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id",referencedColumnName = "id")
+    private Address address;
+
 }
