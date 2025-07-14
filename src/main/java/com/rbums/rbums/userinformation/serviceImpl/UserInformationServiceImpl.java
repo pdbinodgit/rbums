@@ -1,5 +1,6 @@
 package com.rbums.rbums.userinformation.serviceImpl;
 
+import com.rbums.rbums.bankdetails.model.BankDetails;
 import com.rbums.rbums.mapperinterface.UserInformationMapper;
 import com.rbums.rbums.userinformation.dto.UserInformationDto;
 import com.rbums.rbums.userinformation.model.UserInformation;
@@ -26,12 +27,15 @@ public class UserInformationServiceImpl implements UserInformationService {
 
     @Override
     public UserInformationDto saveUserInformation(UserInformationDto userInformationDto) {
-        System.out.println(".........");
-        System.out.println(userInformationDto.getAddressDto().getCountry());
+
         UserInformation userInformation=userInformationMapper.dtoToEntity(userInformationDto);
-        System.out.println(userInformation.getAddress().getCountry());
-      UserInformation userInformation1=  userInformationRepository.save(userInformation);
-      return userInformationMapper.entityToDto(userInformation1);
+        for (BankDetails details:userInformation.getBankDetails()){
+            details.setUserInformation(userInformation);
+        }
+
+        UserInformation userInformation1=  userInformationRepository.save(userInformation);
+
+        return userInformationMapper.entityToDto(userInformation1);
     }
 
     @Override

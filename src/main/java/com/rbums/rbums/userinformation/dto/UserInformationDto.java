@@ -1,12 +1,15 @@
 package com.rbums.rbums.userinformation.dto;
 
 import com.rbums.rbums.address.dto.AddressDto;
+import com.rbums.rbums.bankdetails.dto.BankDetailsDto;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -31,4 +34,6 @@ public class UserInformationDto {
     private String password;
 
     private AddressDto addressDto;
+
+    List<BankDetailsDto> bankDetailsDtos;
 }
