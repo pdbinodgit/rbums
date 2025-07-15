@@ -1,15 +1,18 @@
 package com.rbums.rbums.userinformation.serviceImpl;
 
 import com.rbums.rbums.bankdetails.model.BankDetails;
+import com.rbums.rbums.customException.RbumsCustomException;
 import com.rbums.rbums.mapperinterface.UserInformationMapper;
 import com.rbums.rbums.userinformation.dto.UserInformationDto;
 import com.rbums.rbums.userinformation.model.UserInformation;
 import com.rbums.rbums.userinformation.repository.UserInformationRepository;
 import com.rbums.rbums.userinformation.service.UserInformationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -27,6 +30,10 @@ public class UserInformationServiceImpl implements UserInformationService {
 
     @Override
     public UserInformationDto saveUserInformation(UserInformationDto userInformationDto) {
+        Optional<UserInformation> userInformationOptional=userInformationRepository.findByUsername(userInformationDto.getUsername());
+        if (userInformationOptional.isPresent()){
+            throw new RbumsCustomException("Username is already exist.", HttpStatus.BAD_REQUEST,400);
+        }
 
         UserInformation userInformation=userInformationMapper.dtoToEntity(userInformationDto);
         for (BankDetails details:userInformation.getBankDetails()){

@@ -30,6 +30,6 @@ public class GlobalExceptionHandler {
 
     public ResponseEntity<ApiResponse<?>> rbumsCustomException(RbumsCustomException e, WebRequest webRequest){
 
-    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse<>(e.getStatus(), e.getMessage()));
+    return ResponseEntity.status(e.getStatus()).body(new ApiResponse<>(e.getStatus(), e.getMessage()));
     }
 }

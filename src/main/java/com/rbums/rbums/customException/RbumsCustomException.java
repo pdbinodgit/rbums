@@ -19,8 +19,8 @@ public class RbumsCustomException extends RuntimeException {
      * @param message the detail message. The detail message is saved for
      *                later retrieval by the {@link #getMessage()} method.
      */
-    public RbumsCustomException(String message, String message1, HttpStatus status, int code) {
-        this.message = message1;
+    public RbumsCustomException(String message, HttpStatus status, int code) {
+        this.message = message;
         this.status = status;
         this.code = code;
     }
