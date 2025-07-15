@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.context.request.WebRequest;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,5 +24,12 @@ public class GlobalExceptionHandler {
                 }
         );
         return new ResponseEntity<>(new ApiResponse<>(HttpStatus.BAD_REQUEST,"Validation error.",errors),HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(RbumsCustomException.class)
+
+    public ResponseEntity<ApiResponse<?>> rbumsCustomException(RbumsCustomException e, WebRequest webRequest){
+
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse<>(e.getStatus(), e.getMessage()));
     }
 }
