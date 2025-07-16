@@ -3,6 +3,8 @@ package com.rbums.rbums.userinformation.serviceImpl;
 import com.rbums.rbums.bankdetails.model.BankDetails;
 import com.rbums.rbums.customException.RbumsCustomException;
 import com.rbums.rbums.mapperinterface.UserInformationMapper;
+import com.rbums.rbums.role.model.Role;
+import com.rbums.rbums.role.repository.RoleRepository;
 import com.rbums.rbums.userinformation.dto.UserInformationDto;
 import com.rbums.rbums.userinformation.model.UserInformation;
 import com.rbums.rbums.userinformation.repository.UserInformationRepository;
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +23,8 @@ public class UserInformationServiceImpl implements UserInformationService {
 
     @Autowired
     UserInformationRepository userInformationRepository;
+    @Autowired
+    RoleRepository roleRepository;
 
 
     private final UserInformationMapper userInformationMapper;
@@ -36,9 +41,17 @@ public class UserInformationServiceImpl implements UserInformationService {
         }
 
         UserInformation userInformation=userInformationMapper.dtoToEntity(userInformationDto);
+
         for (BankDetails details:userInformation.getBankDetails()){
             details.setUserInformation(userInformation);
         }
+        System.out.println("here...");
+        System.out.println("role "+userInformation.getRoles());
+       for (Role role: userInformation.getRoles()){
+           System.out.println("role id "+role.getId());
+           userInformation.getRoles().add(role);
+       }
+
 
         UserInformation userInformation1=  userInformationRepository.save(userInformation);
 
@@ -49,9 +62,11 @@ public class UserInformationServiceImpl implements UserInformationService {
     public List<UserInformationDto> getAllUser() {
 
         List<UserInformation> userInformationList=userInformationRepository.findAll();
-        List<UserInformationDto> userInformationDtos=userInformationList.stream().map(
-                userInformation ->
-            userInformationMapper.entityToDto(userInformation)).toList();
+
+        List<UserInformationDto> userInformationDtos=new ArrayList<>();
+        for (UserInformation userInformation:userInformationList){
+            userInformationDtos.add(userInformationMapper.entityToDto(userInformation));
+        }
         return userInformationDtos;
     }
 
