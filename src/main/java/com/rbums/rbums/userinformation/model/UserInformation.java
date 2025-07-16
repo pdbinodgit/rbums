@@ -2,12 +2,15 @@ package com.rbums.rbums.userinformation.model;
 
 import com.rbums.rbums.address.model.Address;
 import com.rbums.rbums.bankdetails.model.BankDetails;
+import com.rbums.rbums.role.model.Role;
 import jakarta.persistence.*;
 import lombok.Data;
 
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -38,4 +41,11 @@ public class UserInformation {
     @OneToMany(mappedBy = "userInformation",cascade = CascadeType.ALL)
     List<BankDetails> bankDetails;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+            @JoinTable(
+                    name = "user_roles",
+                    joinColumns = @JoinColumn(name = "user_id"),
+                    inverseJoinColumns = @JoinColumn(name = "role_id")
+            )
+    Set<Role> roles=new HashSet<>();
 }

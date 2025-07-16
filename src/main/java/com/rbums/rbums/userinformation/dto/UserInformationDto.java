@@ -3,13 +3,16 @@ package com.rbums.rbums.userinformation.dto;
 import com.rbums.rbums.address.dto.AddressDto;
 import com.rbums.rbums.bankdetails.dto.BankDetailsDto;
 
+import com.rbums.rbums.role.dto.RoleDto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -36,4 +39,6 @@ public class UserInformationDto {
     private AddressDto addressDto;
 
     List<BankDetailsDto> bankDetailsDtos;
+
+    Set<RoleDto> roleDtos=new HashSet<>();
 }
