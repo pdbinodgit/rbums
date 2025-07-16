@@ -11,6 +11,7 @@ import com.rbums.rbums.userinformation.repository.UserInformationRepository;
 import com.rbums.rbums.userinformation.service.UserInformationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -25,6 +26,8 @@ public class UserInformationServiceImpl implements UserInformationService {
     UserInformationRepository userInformationRepository;
     @Autowired
     RoleRepository roleRepository;
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
 
     private final UserInformationMapper userInformationMapper;
@@ -45,13 +48,10 @@ public class UserInformationServiceImpl implements UserInformationService {
         for (BankDetails details:userInformation.getBankDetails()){
             details.setUserInformation(userInformation);
         }
-        System.out.println("here...");
-        System.out.println("role "+userInformation.getRoles());
        for (Role role: userInformation.getRoles()){
-           System.out.println("role id "+role.getId());
            userInformation.getRoles().add(role);
        }
-
+       userInformation.setPassword(passwordEncoder.encode(userInformation.getPassword()));
 
         UserInformation userInformation1=  userInformationRepository.save(userInformation);
 

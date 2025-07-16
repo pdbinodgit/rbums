@@ -1,5 +1,6 @@
 package com.rbums.rbums.userinformation.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.rbums.rbums.address.dto.AddressDto;
 import com.rbums.rbums.bankdetails.dto.BankDetailsDto;
 
@@ -34,6 +35,7 @@ public class UserInformationDto {
     private String username;
     @NotBlank(message = "Password is required")
     @Size(min = 8, message = "Password must be at least 8 characters")
+    @JsonIgnore
     private String password;
 
     private AddressDto addressDto;
