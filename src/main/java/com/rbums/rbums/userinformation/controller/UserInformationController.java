@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,12 +20,14 @@ public class UserInformationController {
     UserInformationService userInformationService;
 
     @PostMapping("/saveUser")
+    @PreAuthorize("hasRole('ADMIN')")
     ResponseEntity<ApiResponse<?>> saveUserInformation(@RequestBody @Valid UserInformationDto userInformationDto){
       UserInformationDto dto=  userInformationService.saveUserInformation(userInformationDto);
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>(HttpStatus.OK,"User information saved successfully",dto));
     }
 
     @GetMapping("/getAllUser")
+    @PreAuthorize("hasRole('USER')")
     ResponseEntity<ApiResponse<List<?>>> getAllUser(){
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>(HttpStatus.OK,"User information retrieve successfully",userInformationService.getAllUser()));
     }
