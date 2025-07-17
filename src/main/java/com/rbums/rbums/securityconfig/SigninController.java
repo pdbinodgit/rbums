@@ -1,6 +1,5 @@
 package com.rbums.rbums.securityconfig;
 
-import com.rbums.rbums.customException.RbumsCustomException;
 import com.rbums.rbums.customresponse.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,9 +23,9 @@ public class SigninController {
     @PostMapping("/signin")
     public ResponseEntity<ApiResponse<?>> signIn(@RequestBody AuthRequest authRequest){
 
-
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
+
 
         String token =jwtService.generateToken(authentication.getName());
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>(HttpStatus.OK,"Token generate successfully",new AuthResponse(token)));

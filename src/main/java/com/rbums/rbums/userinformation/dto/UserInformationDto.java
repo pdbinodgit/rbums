@@ -35,7 +35,6 @@ public class UserInformationDto {
     private String username;
     @NotBlank(message = "Password is required")
     @Size(min = 8, message = "Password must be at least 8 characters")
-    @JsonIgnore
     private String password;
 
     private AddressDto addressDto;

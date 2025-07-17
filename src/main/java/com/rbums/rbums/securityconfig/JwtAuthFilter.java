@@ -67,10 +67,7 @@ public class JwtAuthFilter extends GenericFilter {
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                 }
             }
-            chain.doFilter(request, response);
-
         }
-
-
+        chain.doFilter(request, response);
     }
 }
