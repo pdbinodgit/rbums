@@ -48,6 +48,16 @@ public class JwtAuthFilter extends GenericFilter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest= (HttpServletRequest) request;
+        String path  =httpServletRequest.getRequestURI();
+        if (path.startsWith("/v3/api-docs") ||
+                path.startsWith("/swagger-ui") ||
+                path.equals("/swagger-ui.html") ||
+                path.startsWith("/api/v1/auth/")) {
+            chain.doFilter(request, response);
+            return;
+        }
+
+
         String authHeader= httpServletRequest.getHeader("Authorization");
 
         if (authHeader!=null && authHeader.startsWith("Bearer ")){
