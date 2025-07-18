@@ -9,8 +9,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.4.7</version>
-		<relativePath/>
+		<version>3.2.4</version> <!-- or similar -->
 	</parent>
 
 	<groupId>com.rbums</groupId>
