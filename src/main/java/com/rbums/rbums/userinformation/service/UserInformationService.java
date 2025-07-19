@@ -9,7 +9,7 @@ public interface UserInformationService {
 
      UserInformationDto  saveUserInformation(UserInformationDto userInformationDto);
 
-     List<UserInformationDto> getAllUser();
+     Page<UserInformationDto> getAllUser(int number,int size);
 
      UserInformationDto getByUserId();
 

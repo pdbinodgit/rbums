@@ -5,11 +5,15 @@ import com.rbums.rbums.customException.RbumsCustomException;
 import com.rbums.rbums.mapperinterface.UserInformationMapper;
 import com.rbums.rbums.role.model.Role;
 import com.rbums.rbums.role.repository.RoleRepository;
+import com.rbums.rbums.securityconfig.JwtService;
 import com.rbums.rbums.userinformation.dto.UserInformationDto;
 import com.rbums.rbums.userinformation.model.UserInformation;
 import com.rbums.rbums.userinformation.repository.UserInformationRepository;
 import com.rbums.rbums.userinformation.service.UserInformationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -28,6 +32,8 @@ public class UserInformationServiceImpl implements UserInformationService {
     RoleRepository roleRepository;
     @Autowired
     PasswordEncoder passwordEncoder;
+    @Autowired
+    JwtService jwtService;
 
 
     private final UserInformationMapper userInformationMapper;
@@ -59,15 +65,17 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
-    public List<UserInformationDto> getAllUser() {
+    public Page<UserInformationDto> getAllUser(int number,int size) {
 
-        List<UserInformation> userInformationList=userInformationRepository.findAll();
-
+        int totalNumber;
+        Page<UserInformation> userInformationList=userInformationRepository.findAll(PageRequest.of(number,size));
         List<UserInformationDto> userInformationDtos=new ArrayList<>();
         for (UserInformation userInformation:userInformationList){
             userInformationDtos.add(userInformationMapper.entityToDto(userInformation));
         }
-        return userInformationDtos;
+        totalNumber=userInformationDtos.size();
+        System.out.println("total user is "+totalNumber);
+        return new PageImpl<>(userInformationDtos,PageRequest.of(number,size),totalNumber);
     }
 
     @Override

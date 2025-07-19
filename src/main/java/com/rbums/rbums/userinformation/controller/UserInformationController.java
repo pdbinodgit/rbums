@@ -28,7 +28,7 @@ public class UserInformationController {
 
     @GetMapping("/getAllUser")
     @PreAuthorize("hasRole('USER')")
-    ResponseEntity<ApiResponse<List<?>>> getAllUser(){
-        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>(HttpStatus.OK,"User information retrieve successfully",userInformationService.getAllUser()));
+    ResponseEntity<ApiResponse<?>> getAllUser(@RequestParam int number,@RequestParam int size){
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>(HttpStatus.OK,"User information retrieve successfully",userInformationService.getAllUser(number,size)));
     }
 }
