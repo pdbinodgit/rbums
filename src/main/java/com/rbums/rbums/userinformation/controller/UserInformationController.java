@@ -5,6 +5,7 @@ import com.rbums.rbums.userinformation.dto.UserInformationDto;
 import com.rbums.rbums.userinformation.service.UserInformationService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -37,4 +38,13 @@ public class UserInformationController {
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>(HttpStatus.OK,"User information retrieve successfully",userInformationService.getByUserId()));
 
     }
+    @GetMapping("/searchByName")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ApiResponse<?>> searchByName(@RequestParam String keyword,
+                                                       @RequestParam int number,
+                                                       @RequestParam int size){
+
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>(HttpStatus.OK,"User information retrieve successfully",userInformationService.searchByName(keyword,number,size)));
+    }
+
 }

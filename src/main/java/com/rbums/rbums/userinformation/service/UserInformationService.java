@@ -13,7 +13,7 @@ public interface UserInformationService {
 
      UserInformationDto getByUserId();
 
-     List<UserInformationDto> searchByName(String keyboard);
+     Page<UserInformationDto> searchByName(String keyboard,int number,int size);
 
      void updateUserInformation(UserInformationDto userInformationDto);
 

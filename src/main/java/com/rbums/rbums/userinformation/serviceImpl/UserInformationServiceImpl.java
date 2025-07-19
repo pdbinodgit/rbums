@@ -92,8 +92,18 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
-    public List<UserInformationDto> searchByName(String keyboard) {
-        return List.of();
+    public Page<UserInformationDto> searchByName(String keyboard,int number,int size) {
+
+        int totalNumber;
+        Page<UserInformation> userInformationList=userInformationRepository.findByName(keyboard,PageRequest.of(number,size));
+        List<UserInformationDto> userInformationDtos=new ArrayList<>();
+        for (UserInformation userInformation:userInformationList){
+            userInformationDtos.add(userInformationMapper.entityToDto(userInformation));
+        }
+        totalNumber=userInformationDtos.size();
+
+        return new PageImpl<>(userInformationDtos,PageRequest.of(number,size),totalNumber);
+
     }
 
     @Override
