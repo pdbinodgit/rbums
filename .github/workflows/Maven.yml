@@ -1,6 +1,5 @@
 # Create a simple GitHub Actions workflow file for Maven CI as a downloadable manual file
 
-  workflow_content = """\
 name: Java CI with Maven
 
 on:
