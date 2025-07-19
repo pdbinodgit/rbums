@@ -13,6 +13,7 @@ MySQL.It aims to provide a real-world learning experience for managing users and
 - MySQL
 - Lombok
 - Maven
+- Swagger
 
 **3. Project Structure**
 - controller
@@ -20,6 +21,8 @@ MySQL.It aims to provide a real-world learning experience for managing users and
 - repository
 - model (entity)
 - dto (for request/response)
+- exception (for custom exception handling)
+- Exception handling with meaningful error messages
 
 **4. Dependencies**
 
