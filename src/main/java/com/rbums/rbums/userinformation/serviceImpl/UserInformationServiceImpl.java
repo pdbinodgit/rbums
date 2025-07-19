@@ -15,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -74,13 +75,20 @@ public class UserInformationServiceImpl implements UserInformationService {
             userInformationDtos.add(userInformationMapper.entityToDto(userInformation));
         }
         totalNumber=userInformationDtos.size();
-        System.out.println("total user is "+totalNumber);
+
         return new PageImpl<>(userInformationDtos,PageRequest.of(number,size),totalNumber);
     }
 
     @Override
     public UserInformationDto getByUserId() {
-        return null;
+       String  username= SecurityContextHolder.getContext().getAuthentication().getName();
+       Optional<UserInformation> userInformationOptional=userInformationRepository.findByUsername(username);
+       if (userInformationOptional.isPresent()){
+           return userInformationMapper.entityToDto(userInformationOptional.get());
+       }else {
+           throw new RbumsCustomException("User not found",HttpStatus.INTERNAL_SERVER_ERROR,500);
+       }
+
     }
 
     @Override
