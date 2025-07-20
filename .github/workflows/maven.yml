@@ -1,4 +1,4 @@
-name: Java CI with Maven
+name: Java CI with Maven and MySQL
 
 on:
   push:
@@ -16,8 +16,8 @@ jobs:
         env:
           MYSQL_ROOT_PASSWORD: root
           MYSQL_DATABASE: rbums
-          MYSQL_USER: root
-          MYSQL_PASSWORD: 1234
+          MYSQL_USER: bishnu
+          MYSQL_PASSWORD: bishnu123
         ports:
           - 3306:3306
         options: >-
@@ -27,14 +27,22 @@ jobs:
           --health-retries=3
 
     steps:
-      - name: Checkout code
+      - name: ⬇️ Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up Java
+      - name: ☕ Set up Java
         uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Build with Maven (Skip Tests)
+      - name: ⏳ Wait for MySQL to be ready
+        run: |
+          echo "Waiting for MySQL to be ready..."
+          sleep 20
+
+      - name: 🛠️ Build project
         run: mvn clean install -DskipTests
+
+      - name: ✅ Run tests
+        run: mvn test
