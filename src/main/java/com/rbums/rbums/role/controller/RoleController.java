@@ -26,6 +26,7 @@ public class RoleController {
 
     @GetMapping("/getAllRole")
    public ResponseEntity<ApiResponse<?>> getAllRole(){
+        int t
        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>(HttpStatus.OK,"Role retrieve successfully",roleService.getAllRole()));
 
    }
