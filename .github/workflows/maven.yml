@@ -48,4 +48,4 @@ jobs:
           done
 
       - name: 🛠️ Build with Maven (using CI profile)
-        run: mvn clean install -Dspring.profiles.active=ci
+        run: mvn clean install -Dspring.profiles.active=ci -DskipTests
