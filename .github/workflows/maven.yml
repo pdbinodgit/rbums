@@ -1,23 +1,37 @@
 name: Java CI with Maven
 
+# When this file runs:
+#
+#Every time you push code to main
+#
+#Or when someone creates a pull request to main
 on:
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
 
+# This starts a job called build
+# It runs on a clean Ubuntu Linux virtual machine (a new computer on the cloud just for this build)
+
 jobs:
   build:
     runs-on: ubuntu-latest
-
+#Starts a fresh MySQL server container
     services:
       mysql:
         image: mysql:8.0
+
+        #nside the MySQL container:
+        #
+        #root password is root
+        #
+        #It creates a database named rbums
+
         env:
           MYSQL_ROOT_PASSWORD: root
           MYSQL_DATABASE: rbums
-#          MYSQL_USER: root
-#          MYSQL_PASSWORD: 1234
+
         ports:
           - 3306:3306
         options: >-
@@ -48,4 +62,4 @@ jobs:
           done
 
       - name: 🛠️ Build with Maven (using CI profile)
-        run: mvn clean install -Dspring.profiles.active=ci -DskipTests
+        run: mvn clean install -Dspring.profiles.active=ci
