@@ -11,7 +11,7 @@ public interface UserInformationService {
 
      Page<UserInformationDto> getAllUser(int number,int size);
 
-     UserInformationDto getByUserId();
+     UserInformationDto getByUserId(Long id);
 
      Page<UserInformationDto> searchByName(String keyboard,int number,int size);
 

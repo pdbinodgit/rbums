@@ -80,14 +80,25 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
-    public UserInformationDto getByUserId() {
-       String  username= SecurityContextHolder.getContext().getAuthentication().getName();
-       Optional<UserInformation> userInformationOptional=userInformationRepository.findByUsername(username);
-       if (userInformationOptional.isPresent()){
-           return userInformationMapper.entityToDto(userInformationOptional.get());
-       }else {
-           throw new RbumsCustomException("User not found",HttpStatus.INTERNAL_SERVER_ERROR,500);
-       }
+    public UserInformationDto getByUserId(Long id) {
+        if (id==null) {
+
+            String username = SecurityContextHolder.getContext().getAuthentication().getName();
+            Optional<UserInformation> userInformationOptional = userInformationRepository.findByUsername(username);
+            if (userInformationOptional.isPresent()) {
+                return userInformationMapper.entityToDto(userInformationOptional.get());
+            } else {
+                throw new RbumsCustomException("User not found", HttpStatus.INTERNAL_SERVER_ERROR, 500);
+            }
+        }else {
+            Optional<UserInformation> userInformationOptional=userInformationRepository.findById(id);
+
+            if (userInformationOptional.isPresent()) {
+                return userInformationMapper.entityToDto(userInformationOptional.get());
+            } else {
+                throw new RbumsCustomException("User not found", HttpStatus.INTERNAL_SERVER_ERROR, 500);
+            }
+        }
 
     }
 

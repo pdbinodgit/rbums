@@ -34,8 +34,8 @@ public class UserInformationController {
     }
     @GetMapping("/getUserPersonalInformation")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public ResponseEntity<ApiResponse<?>> getByUserId(){
-        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>(HttpStatus.OK,"User information retrieve successfully",userInformationService.getByUserId()));
+    public ResponseEntity<ApiResponse<?>> getByUserId(@RequestParam(required = false) Long id){
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>(HttpStatus.OK,"User information retrieve successfully",userInformationService.getByUserId(id)));
 
     }
     @GetMapping("/searchByName")
