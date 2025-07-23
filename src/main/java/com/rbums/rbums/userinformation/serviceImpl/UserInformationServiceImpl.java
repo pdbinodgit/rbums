@@ -118,7 +118,19 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
-    public void updateUserInformation(UserInformationDto userInformationDto) {
+    public void updateUserInformation(UserInformationDto userInformationDto,Long id) {
+        Optional<UserInformation> optionalUserInformation=userInformationRepository.findById(id);
+        if (optionalUserInformation.isPresent()){
+            optionalUserInformation.get().setFirstName(userInformationDto.getFirstName());
+            optionalUserInformation.get().setDateOfBirth(userInformationDto.getDateOfBirth());
+            optionalUserInformation.get().setMiddleName(userInformationDto.getMiddleName());
+            optionalUserInformation.get().setLastName(userInformationDto.getLastName());
+            userInformationRepository.save(optionalUserInformation.get());
+
+        }else {
+            throw new RbumsCustomException("User not found!!",HttpStatus.BAD_REQUEST,400);
+        }
+
 
     }
 }

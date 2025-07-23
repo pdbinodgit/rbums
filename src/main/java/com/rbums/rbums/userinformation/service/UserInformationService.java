@@ -15,6 +15,6 @@ public interface UserInformationService {
 
      Page<UserInformationDto> searchByName(String keyboard,int number,int size);
 
-     void updateUserInformation(UserInformationDto userInformationDto);
+     void updateUserInformation(UserInformationDto userInformationDto,Long id);
 
 }

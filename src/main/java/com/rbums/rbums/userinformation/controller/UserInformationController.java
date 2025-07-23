@@ -47,4 +47,10 @@ public class UserInformationController {
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>(HttpStatus.OK,"User information retrieve successfully",userInformationService.searchByName(keyword,number,size)));
     }
 
+    @PutMapping("/updateUserInformation/{id}")
+    public ResponseEntity<ApiResponse<?>> updateUserInformation(@RequestBody UserInformationDto userInformationDto,@PathVariable Long id){
+        userInformationService.updateUserInformation(userInformationDto,id);
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>(HttpStatus.OK,"User information update successfully"));
+    }
+
 }
