@@ -1,6 +1,8 @@
 package com.rbums.rbums.userinformation.controller;
 
 import com.rbums.rbums.customresponse.ApiResponse;
+import com.rbums.rbums.role.dto.RoleDto;
+import com.rbums.rbums.role.repository.RoleRepository;
 import com.rbums.rbums.userinformation.dto.UserInformationDto;
 import com.rbums.rbums.userinformation.service.UserInformationService;
 import jakarta.validation.Valid;
@@ -12,6 +14,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/user")
@@ -48,9 +51,17 @@ public class UserInformationController {
     }
 
     @PutMapping("/updateUserInformation/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ApiResponse<?>> updateUserInformation(@RequestBody UserInformationDto userInformationDto,@PathVariable Long id){
         userInformationService.updateUserInformation(userInformationDto,id);
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>(HttpStatus.OK,"User information update successfully"));
+    }
+
+    @PutMapping("/updateRole/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ApiResponse<?>> updateRoleInformation(@RequestBody Set<RoleDto> roleDtos, @PathVariable Long id){
+        userInformationService.userRoleUpdate(roleDtos,id);
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>(HttpStatus.OK,"User role update successfully"));
     }
 
 }

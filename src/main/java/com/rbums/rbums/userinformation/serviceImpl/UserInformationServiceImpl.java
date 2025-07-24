@@ -2,7 +2,9 @@ package com.rbums.rbums.userinformation.serviceImpl;
 
 import com.rbums.rbums.bankdetails.model.BankDetails;
 import com.rbums.rbums.customException.RbumsCustomException;
+import com.rbums.rbums.mapperinterface.RoleMapper;
 import com.rbums.rbums.mapperinterface.UserInformationMapper;
+import com.rbums.rbums.role.dto.RoleDto;
 import com.rbums.rbums.role.model.Role;
 import com.rbums.rbums.role.repository.RoleRepository;
 import com.rbums.rbums.securityconfig.JwtService;
@@ -19,9 +21,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -35,7 +36,8 @@ public class UserInformationServiceImpl implements UserInformationService {
     PasswordEncoder passwordEncoder;
     @Autowired
     JwtService jwtService;
-
+    @Autowired
+    RoleMapper roleMapper;
 
     private final UserInformationMapper userInformationMapper;
 
@@ -131,6 +133,22 @@ public class UserInformationServiceImpl implements UserInformationService {
             throw new RbumsCustomException("User not found!!",HttpStatus.BAD_REQUEST,400);
         }
 
+
+    }
+
+    @Override
+    public void userRoleUpdate(Set<RoleDto> roleDtos, Long userId) {
+        Optional<UserInformation> optionalUserInformation=userInformationRepository.findById(userId);
+        if (optionalUserInformation.isPresent()){
+           optionalUserInformation.get().getRoles().clear();
+           Set<Role> roles=new HashSet<>();
+           roles=roleDtos.stream().map(roleDto -> roleMapper.dtoToEntity(roleDto)).collect(Collectors.toSet());
+           optionalUserInformation.get().setRoles(roles);
+           userInformationRepository.save(optionalUserInformation.get());
+
+        }else {
+            throw new RbumsCustomException("User not found!!",HttpStatus.BAD_REQUEST,400);
+        }
 
     }
 }
