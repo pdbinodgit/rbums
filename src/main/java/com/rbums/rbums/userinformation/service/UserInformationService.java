@@ -21,4 +21,6 @@ public interface UserInformationService {
 
      void userRoleUpdate(Set<RoleDto> roleDtos, Long userId);
 
+     void updateUserPassword(UserInformationDto userInformationDto, Long userId);
+
 }

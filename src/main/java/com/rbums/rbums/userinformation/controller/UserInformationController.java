@@ -64,4 +64,14 @@ public class UserInformationController {
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>(HttpStatus.OK,"User role update successfully"));
     }
 
+
+    @PutMapping("/changePassword/{id}")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<ApiResponse<?>> changePassword(@RequestBody UserInformationDto userInformationDto, @PathVariable Long id){
+        userInformationService.updateUserPassword(userInformationDto,id);
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>(HttpStatus.OK,"User password change successfully"));
+    }
+
+
+
 }

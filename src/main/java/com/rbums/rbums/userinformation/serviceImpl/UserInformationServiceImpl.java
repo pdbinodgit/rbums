@@ -151,4 +151,19 @@ public class UserInformationServiceImpl implements UserInformationService {
         }
 
     }
+
+    @Override
+    public void updateUserPassword(UserInformationDto userInformationDto, Long userId) {
+        Optional<UserInformation> optionalUserInformation=userInformationRepository.findById(userId);
+        if (optionalUserInformation.isPresent()){
+            if (passwordEncoder.matches(userInformationDto.getPassword(),optionalUserInformation.get().getPassword())){
+                throw new RbumsCustomException("New Password can not be same as previous.",HttpStatus.BAD_REQUEST,200);
+            }else {
+                optionalUserInformation.get().setPassword(passwordEncoder.encode(userInformationDto.getPassword()));
+                userInformationRepository.save(optionalUserInformation.get());
+            }
+        }  else {
+            throw new RbumsCustomException("User not found!!",HttpStatus.BAD_REQUEST,400);
+        }
+    }
 }
