@@ -2,6 +2,7 @@ package com.rbums.rbums.userinformation.serviceImpl;
 
 import com.rbums.rbums.bankdetails.model.BankDetails;
 import com.rbums.rbums.customException.RbumsCustomException;
+import com.rbums.rbums.mailconfig.serviceImpl.UserEmailService;
 import com.rbums.rbums.mapperinterface.RoleMapper;
 import com.rbums.rbums.mapperinterface.UserInformationMapper;
 import com.rbums.rbums.role.dto.RoleDto;
@@ -41,6 +42,9 @@ public class UserInformationServiceImpl implements UserInformationService {
     @Autowired
     RoleMapper roleMapper;
 
+    @Autowired
+    UserEmailService userEmailService;
+
     private final UserInformationMapper userInformationMapper;
 
     public UserInformationServiceImpl(UserInformationMapper userInformationMapper) {
@@ -73,6 +77,8 @@ public class UserInformationServiceImpl implements UserInformationService {
         userInformation.setCreatedBy(SecurityContextHolder.getContext().getAuthentication().getName());
 
         UserInformation userInformation1=  userInformationRepository.save(userInformation);
+        userEmailService.sendMail(userInformation1.getUsername(),
+                "Hello " + userInformation1.getUsername() + ",\n\nYou have successfully registered on RBUMS.\n\nThanks!");
 
         return userInformationMapper.entityToDto(userInformation1);
     }
