@@ -78,7 +78,7 @@ public class UserInformationServiceImpl implements UserInformationService {
 
         UserInformation userInformation1=  userInformationRepository.save(userInformation);
         userEmailService.sendMail(userInformation1.getUsername(),
-                "Hello " + userInformation1.getUsername() + ",\n\nYou have successfully registered on RBUMS.\n\nThanks!");
+                "Hello " + userInformation1.getFirstName() + ",\n\nYou have successfully registered on RBUMS.\n\nThanks!");
 
         return userInformationMapper.entityToDto(userInformation1);
     }
@@ -182,4 +182,6 @@ public class UserInformationServiceImpl implements UserInformationService {
             throw new RbumsCustomException("User not found!!",HttpStatus.BAD_REQUEST,400);
         }
     }
+
+
 }
