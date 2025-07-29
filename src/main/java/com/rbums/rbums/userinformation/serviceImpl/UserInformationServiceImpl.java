@@ -22,6 +22,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -67,6 +68,9 @@ public class UserInformationServiceImpl implements UserInformationService {
         LocalDate dob=userInformation.getDateOfBirth();
         int age=todayDate.getYear()- dob.getYear();
         userInformation.setAge((long) age);
+
+        userInformation.setCreatedAt(LocalDateTime.now());
+        userInformation.setCreatedBy(SecurityContextHolder.getContext().getAuthentication().getName());
 
         UserInformation userInformation1=  userInformationRepository.save(userInformation);
 

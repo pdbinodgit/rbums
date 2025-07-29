@@ -8,6 +8,7 @@ import lombok.Data;
 
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -34,6 +35,10 @@ public class UserInformation {
     private String username;
 
     private String password;
+
+    private LocalDateTime createdAt;
+
+    private String createdBy;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id",referencedColumnName = "id")
