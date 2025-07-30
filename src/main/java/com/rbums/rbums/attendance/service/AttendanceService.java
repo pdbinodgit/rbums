@@ -1,4 +1,8 @@
 package com.rbums.rbums.attendance.service;
 
-public class AttendanceService {
+import com.rbums.rbums.attendance.model.Attendance;
+
+public interface AttendanceService {
+
+    public Attendance saveAttendance(Attendance attendance);
 }
