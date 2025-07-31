@@ -21,6 +21,14 @@ public class AttendanceController {
     @PostMapping("/checkIn")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<ApiResponse<?>> saveAttendance(@RequestBody AttendanceDto attendanceDto){
-        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>(HttpStatus.OK,"Check in successfully.",attendanceService.saveAttendance(attendanceDto)));
+        attendanceService.saveAttendance(attendanceDto);
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>(HttpStatus.OK,"Check in successfully."));
+    }
+
+    @PostMapping("/checkIn")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<ApiResponse<?>> updateAttendance(@RequestBody AttendanceDto attendanceDto){
+        attendanceService.updateAttendance(attendanceDto);
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>(HttpStatus.OK,"Check out successfully."));
     }
 }

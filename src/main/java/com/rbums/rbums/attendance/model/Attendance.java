@@ -22,4 +22,6 @@ public class Attendance {
     private boolean presentStatus;
 
     private Long userId;
+
+    private String remark;
 }
