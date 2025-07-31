@@ -20,4 +20,6 @@ public class Attendance {
     private LocalDateTime checkOut;
 
     private boolean presentStatus;
+
+    private Long userId;
 }
