@@ -14,4 +14,8 @@ public class AttendanceDto {
     private LocalDateTime checkOut;
 
     private boolean presentStatus;
+
+    private Long userId;
+
+    private String remark;
 }

@@ -30,7 +30,16 @@ public class AttendanceServiceImpl implements AttendanceService {
 
     @Override
     public void saveAttendance(AttendanceDto attendanceDto) {
+        attendanceDto.setCheckIn(LocalDateTime.now());
+        if (LocalTime.now().isAfter(LocalTime.of(9,30))){
+            attendanceDto.setRemark("Late check in");
+        }else if (LocalTime.now().isBefore(LocalTime.of(8,40))){
+            attendanceDto.setRemark("Early check in");
+        }else{
+            attendanceDto.setRemark(" On time check in");
 
+        }
+        attendanceDto.setPresentStatus(true);
         Attendance attendance=attendanceMapper.dtoToEntity(attendanceDto);
     }
 
@@ -48,6 +57,11 @@ public class AttendanceServiceImpl implements AttendanceService {
         attendanceOptional.get().setCheckOut(LocalDateTime.now());
         if (LocalTime.now().isAfter(LocalTime.of(6,45))){
             attendanceOptional.get().setRemark("Late checkout");
+        }else if (LocalTime.now().isBefore(LocalTime.of(5,30))){
+            attendanceOptional.get().setRemark("Early checkout");
+        }else {
+            attendanceOptional.get().setRemark("On time checkout");
+
         }
         attendanceOptional.get().setPresentStatus(false);
         attendanceRepository.save(attendanceOptional.get());
